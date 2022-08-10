@@ -13,17 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('playlists', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->string('name');
-            $table->string('phone')->nullable();
-            $table->string('email');
-            $table->enum('is_admin', ['true', 'false'])->default('false');
-            $table->string('password');
-            $table->string('channel_name')->nullable();
-            $table->text('description')->nullable();
-            $table->string('token')->nullable()->index();
-            $table->softDeletes();
+            $table->string('description')->nullable();
+            $table->uuid('user_id');
             $table->timestamps();
         });
     }
@@ -35,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('playlists');
     }
 };
