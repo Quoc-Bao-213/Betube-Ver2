@@ -7,14 +7,14 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasMediaTrait;
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
     
     use SoftDeletes;
 
@@ -122,8 +122,24 @@ class User extends Authenticatable implements HasMedia
         return null;
     }
 
-    public function registerMediaConversions(?Media $media = null)
+    // public function registerMediaConversions(?Media $media = null)
+    // {
+    //     $this->addMediaConversion('avatar')
+    //         ->quality(80)
+    //         ->nonQueued();
+
+    //     $this->addMediaConversion('cover')
+    //         ->quality(80)
+    //         ->nonQueued();
+    // }
+
+    public function registerMediaConversions(Media $media = null): void
     {
+        // $this
+        //     ->addMediaConversion('preview')
+        //     ->fit(Manipulations::FIT_CROP, 300, 300)
+        //     ->nonQueued();
+        
         $this->addMediaConversion('avatar')
             ->quality(80)
             ->nonQueued();
